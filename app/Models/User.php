@@ -22,6 +22,16 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'first_surname',
+        'second_surname',
+        'birth_date',
+        'dni',
+        'register_date',
+        'address',
+        'city',
+        'url_picture',
+        'phone',
+        'role',
     ];
 
     /**
@@ -66,5 +76,16 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class, 'user_dni', 'dni');
+    }
+
+    public function index()
+    {
+        $employees = User::where('role', 'employee')->get();
+        return view('employees.index', compact('employees'));
     }
 }

@@ -6,30 +6,25 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class AuthController extends Controller
+/***** AuthController: Clase abstacta con métodos comunes para la autenticación,
+ * de la que heredan WebAuthController y ApiController */
+abstract class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
+    /***** validateCredentials: Valida las credenciales del usuario (email, password) */
+    protected function validateCredentials(Request $request)
+    {   
+        // Ambos son requeridos, email debe tener un formato correcto y password debe ser como mínimo de 6 caracteres
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 400);
+            return $validator;
         }
 
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized: Wrong email/password'], 401);
-        }
-
-        return response()->json(['token' => $token]);
+        return null;
     }
-
-    public function me()
-    {
-        return response()->json(auth('api')->user());
-    }
+    
 }
+
