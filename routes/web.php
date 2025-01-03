@@ -54,3 +54,8 @@ Route::middleware(['auth:web'])->group(function () {
 Route::get('/login', [WebAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [WebAuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
+
+// Redirecciona cualquier ruta no encontrada a login
+Route::fallback(function () {
+    return redirect()->route('login');
+});
