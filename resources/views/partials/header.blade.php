@@ -14,8 +14,8 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}" onclick="showLoadingSpinner()">Empleados</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('contracts.index') }}" onclick="showLoadingSpinner()">Contratos</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('records.index') }}" onclick="showLoadingSpinner()">Informes</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showLoadingSpinner()">Perfil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" onclick="showLoadingSpinner()">Configuración</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('profile') }}" onclick="showLoadingSpinner()">Perfil</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('configuration') }}" onclick="showLoadingSpinner()">Configuración</a></li>
                 <li class="nav-item"><a class="nav-link text-danger" href="{{ route('logout') }}" onclick="showLoadingSpinner()">Salir</a></li>
             </ul>
         </div>

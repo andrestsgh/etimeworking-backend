@@ -40,7 +40,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="latitude" class="form-label">Latitud</label>
-                    <input type="text" id="latitude" name="latitude" class="form-control" value="{{ $record->latitude ?? old('latitude') }}" {{ $isViewing ? 'disabled' : '' }}>
+                    <input type="number" step="0.000001" min="-90" max="90" id="latitude" name="latitude" class="form-control" value="{{ $record->latitude ?? old('latitude') }}" {{ $isViewing ? 'disabled' : '' }}>
                     @error('latitude') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>
@@ -48,7 +48,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="longitude" class="form-label">Longitud</label>
-                    <input type="text" id="longitude" name="longitude" class="form-control" value="{{ $record->longitude ?? old('longitude') }}" {{ $isViewing ? 'disabled' : '' }}>
+                    <input type="number" step="0.000001" min="-180" max="180" id="longitude" name="longitude" class="form-control" value="{{ $record->longitude ?? old('longitude') }}" {{ $isViewing ? 'disabled' : '' }}>
                     @error('longitude') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>

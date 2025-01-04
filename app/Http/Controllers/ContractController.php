@@ -49,7 +49,10 @@ class ContractController extends Controller
 
     /***** show: muestra los datos de un contrato, sin posibilidad de edición */
     public function show(Contract $contract){
-        return view('contracts.form', ['isEditing' => false, 'isViewing' => true, 'contract' => $contract]);
+        // Recoge todos los usuarios y compañias necesarios para listarlos en el formulario.
+        $users = User::all();
+        $companies = Company::all();
+        return view('contracts.form', ['isEditing' => false, 'isViewing' => true, 'contract' => $contract, 'users' => $users, 'companies' => $companies]);
     }
 
     /***** delete: elimina un contrato utilizando su id */
@@ -63,9 +66,24 @@ class ContractController extends Controller
         return redirect()->route('contracts.index')->with('success', 'Contrato eliminado correctamente.');
     }
 
-    /***** validate: Valida los campos requeridos y formatos de un contrato */
+    /***** validate: Rellena los campos id's de la relación y valida los campos requeridos y formatos de un contrato */
     public function validate($request){
+
+        // Obtiene el id del usuario a partir del dni
+        $user = User::where('dni', $request->input('user_dni'))->first();
+
+        // Obtiene el id de la empresa a partir del cif
+        $company = Company::where('cif', $request->input('company_cif'))->first();
+
+        // Agrega los id's al request
+        $request->merge([
+            'user_id' => $user->id,
+            'company_id' => $company->id,
+        ]);
+
         $request->validate([
+            'user_id' => 'required|integer',
+            'company_id' => 'required|integer',
             'user_dni' => 'required|exists:users,dni',
             'company_cif' => 'required|exists:companies,cif',
             'type' => 'required|in:Indefinido,Temporal,Discontinuo', // Comprueba el conjunto de valores válidos
@@ -81,7 +99,7 @@ class ContractController extends Controller
     public function store(Request $request){
         $this->validate($request);
 
-        // Crea el contrato
+        // Crear el contrato
         Contract::create($request->all());
 
         // Carga de nuevo la vista del listado de contratos devolviendo un mensaje de feedback

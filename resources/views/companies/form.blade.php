@@ -36,7 +36,13 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="country" class="form-label">País</label>
-                    <input type="text" id="country" name="country" class="form-control" value="{{ $company->country ?? old('country') }}" {{ $isViewing ? 'disabled' : '' }} @if(!$isEditing) required @endif>
+                    <select id="country" name="country" class="form-control" {{ $isViewing ? 'disabled' : '' }}>
+                        @foreach($countries as $option)
+                            <option value="{{ $option }}" {{ (old('country', $contract->country ?? '') == $option) ? 'selected' : '' }}>
+                                {{ ucfirst($option) }}
+                            </option>
+                        @endforeach
+                    </select>
                     @error('country') <small class="text-danger">{{ $message }}</small> @enderror
                 </div>
             </div>

@@ -10,6 +10,8 @@ class Contract extends Model
     use HasFactory;
 		    
     protected $fillable = [
+        'user_id',
+        'company_id',
         'user_dni',
         'type',
         'begin_date',
@@ -22,6 +24,16 @@ class Contract extends Model
 
     public function user()
     {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+/*
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_dni', 'dni');
     }
 
@@ -29,7 +41,7 @@ class Contract extends Model
     {
         return $this->belongsTo(Company::class, 'company_cif', 'cif');
     }
-
+*/
     public function records()
     {
         return $this->hasMany(Record::class);

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\WebAuthController;
 use Illuminate\Support\Facades\Route;
@@ -12,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:web'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/configuration', [ConfigurationController::class, 'index'])->name('configuration');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::get('/logout', [WebAuthController::class, 'logout'])->name('logout');
 
     // Endpoints de empleados
@@ -53,7 +57,6 @@ Route::middleware(['auth:web'])->group(function () {
 
 Route::get('/login', [WebAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [WebAuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [WebAuthController::class, 'logout'])->name('logout');
 
 // Redirecciona cualquier ruta no encontrada a login
 Route::fallback(function () {

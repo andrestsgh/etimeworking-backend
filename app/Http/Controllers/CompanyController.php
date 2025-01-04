@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 /***** CompanyController: Clase controller para las empresas */
 class CompanyController extends Controller
 {
+    private $countries = [
+        'España',
+        'Estados Unidos',
+        'Francia',
+        'Alemania',
+        'Italia',
+    ];
     /***** index: Gestiona los resultados de la vista principal */
     public function index(Request $request){
         // Obtiene los parámetros de ordenación y búsqueda
@@ -34,17 +41,17 @@ class CompanyController extends Controller
     /***** create: llama a la vista formulario para crear una empresa */
     public function create(){
         // Carga la vista del formulario. Los valores isEditing e isViewing indican si esta visualizando, editando o creando en caso de que ambos sean false.
-        return view('companies.form', ['company' => null, 'isViewing' => false, 'isEditing' => false]);
+        return view('companies.form', ['company' => null, 'isViewing' => false, 'isEditing' => false, 'countries' => $this->countries]);
     }
 
     /***** edit: llama a la vista formulario para editar una empresa */
     public function edit(Company $company){
-        return view('companies.form', ['company' => $company, 'isViewing' => false, 'isEditing' => true]);
+        return view('companies.form', ['company' => $company, 'isViewing' => false, 'isEditing' => true, 'countries' => $this->countries]);
     }
 
     /***** show: muestra los datos de una empresa, sin posibilidad de edición */
     public function show(Company $company){
-        return view('companies.form', ['company' => $company, 'isViewing' => true, 'isEditing' => false]);
+        return view('companies.form', ['company' => $company, 'isViewing' => true, 'isEditing' => false, 'countries' => $this->countries]);
     }
 
     /***** delete: elimina una empresa utilizando su id */
