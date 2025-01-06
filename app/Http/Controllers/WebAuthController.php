@@ -34,7 +34,8 @@ class WebAuthController extends AuthController
         if (Auth::attempt($credentials, $request->has('remember'))) {
             // De momento sólo se permite el acceso al panel de control al usuario con rol de administrador. (403 Forbidden)
             if (!(auth()->check() && auth()->user()->role === 'admin')) {
-                abort(403, 'No tienes permiso para acceder a esta página.');
+                $this->logout();
+                abort(403, 'You do not have permission to access this page.');
             }
             return redirect()->route('dashboard');
         }
